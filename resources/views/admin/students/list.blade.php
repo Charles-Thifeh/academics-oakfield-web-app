@@ -15,18 +15,18 @@
         <div class="p-5 mx-auto my-10 bg-white rounded-md shadow-sm">
             <div class="flex justify-between px-10">
                 <div class="flex w-full justify-start">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('admin-student') }}">
                         <button class="px-4 py-4 text-white bg-red-500 rounded-md  hover:bg-red-600 hover:outline-none">
-                            <- Dashboard </button>
+                            <- Back </button>
                     </a>
                 </div>
 
                 <div class="flex w-full justify-end">
-                    <a href="{{ route('admin-teacher-add') }}">
+                    <a href="{{ route('admin-student-add') }}">
                         <button
                             class="px-4 py-4 text-white bg-green-500 rounded-md  hover:bg-green-600 hover:outline-none"
                             id="open-btn">
-                            Add New Teacher
+                            Add New Student
                         </button>
                     </a>
 
@@ -38,7 +38,8 @@
             {{-- Invoice starts --}}
             <div class="w-full mt-12 py-2 px-4 text-xl">
                 <div class="text-black text-center w-full my-2 py-2 px-4">
-                    <h3 class="text-2xl font-extrabold">Teacher's List</h3>
+                    <h3 class="text-2xl font-extrabold">{{ $students->first()->class }} Class List</h3>
+                    <h4 class="text-xl font-semibold">Status: {{ $status }}</h4>
 
                     <div class="w-full flex justify-end py-8">
                         <input type="text" id="myInput"
@@ -51,9 +52,9 @@
                             <tr class="py-2 px-4 font-semibold">
                                 <th class="border border-slate-500">S/N</th>
                                 <th class="border border-slate-500">Full Name</th>
-                                <th class="border border-slate-500">ID</th>
+                                <th class="border border-slate-500">Reg No</th>
                                 <th class="border border-slate-500">Class</th>
-                                <th class="border border-slate-500">Subjects</th>
+                                <th class="border border-slate-500">Department</th>
                                 <th class="border border-slate-500">Actions</th>
                             </tr>
                         </thead>
@@ -61,35 +62,40 @@
                             @php
                                 $i = 0;
                             @endphp
-                            @foreach ($teachers as $item)
-                                @php
-                                    $subjects = DB::table('subtables')
-                                        ->select('subject', 'level')
-                                        ->where('teacher_id', $item->teacher_id)
-                                        ->get();
-                                @endphp
+                            @foreach ($students as $item)
                                 <tr class="py-2 px-4">
                                     <td class="border border-slate-500">{{ $i = $i + 1 }}</td>
                                     <td class="border border-slate-500">
                                         {{ $item->surname }} {{ $item->firstname }}
-                                        <p class="text-sm">
+                                        <p class="text-sm text-end">
+
                                         </p>
                                     </td>
-                                    <td class="border border-slate-500">{{ $item->teacher_id }}</td>
-                                    <td class="border border-slate-500">{{ $item->class }}</td>
-                                    <td class="border border-slate-500">
-                                        @if ($subjects->first() != null)
-                                            @foreach ($subjects as $subject)
-                                                <p class="text-sm">
-                                                    {{ $subject->subject }} [{{ $subject->level }}]
-                                                </p>
-                                            @endforeach
-                                        @endif
+                                    <td class="border border-slate-500">{{ $item->reg_no }}
+                                        @if ($item->status == 'active')
+                                                <button
+                                                    class="text-xs h-4 px-2 text-white bg-green-500 rounded-md  hover:bg-red-600 hover:outline-none">
+                                                    Active
+                                                </button>
+                                            @elseif($item->status == 'inactive')
+                                                <button
+                                                    class="text-xs h-4 px-2 text-white bg-red-500 rounded-md  hover:bg-red-600 hover:outline-none">
+                                                    Inactive
+                                                </button>
+                                            @else
+                                                <button
+                                                    class="text-xs h-4 px-2 text-white bg-green-500 rounded-md  hover:bg-red-600 hover:outline-none">
+                                                    Graduated
+                                                </button>
+                                            @endif
                                     </td>
+                                    <td class="border border-slate-500">{{ $item->class }}</td>
+                                    <td class="border border-slate-500">{{ $item->department }}</td>
+
                                     <td class="border border-slate-500 w-32">
                                         <div class="flex gap-2 py-2 px-4">
                                             <div class="">
-                                                <form action="{{ route('admin-teacher-edit') }}" method="GET">
+                                                <form action="{{ route('admin-student-edit') }}" method="GET">
                                                     @csrf
                                                     <input type="hidden" name="vim" value="{{ $item->id }}">
                                                     <button details="Edit details and class"
@@ -99,12 +105,12 @@
                                                 </form>
                                             </div>
                                             <div class="">
-                                                <form action="{{ route('admin-teacher-subject') }}" method="GET">
+                                                <form action="{{ route('admin-student-status') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="vim" value="{{ $item->id }}">
                                                     <button
                                                         class="text-xs h-8 px-4 text-white bg-orange-500 rounded-md  hover:bg-orange-600 hover:outline-none">
-                                                        Subject
+                                                        Change Status
                                                     </button>
                                                 </form>
                                             </div>
@@ -120,9 +126,9 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <div class="py-4">
-                            {{ $teachers->links() }}
-                        </div>
+                        {{-- <div class="py-4">
+                            {{ $students->links() }}
+                        </div> --}}
                     </table>
 
 

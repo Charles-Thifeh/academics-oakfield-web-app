@@ -7,7 +7,7 @@
 
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('View Teachers / Edit') }}
+                {{ __('View Students / Edit') }}
             </h2>
         </x-slot>
 
@@ -15,17 +15,21 @@
             <div class="p-5 mx-auto my-10 bg-white rounded-md shadow-sm">
                 <div class="flex justify-between px-10">
                     <div class="flex w-full justify-start">
-                        <a href="{{ route('admin-teacher') }}">
+                        <a href="{{ route('dashboard') }}">
                             <button class="px-4 py-4 text-white bg-red-500 rounded-md  hover:bg-red-600 hover:outline-none">
-                                <- Back
+                                <- Dashboard
                             </button>
                         </a>
                     </div>
 
                     <div class="flex w-full justify-end">
-                        <button class="px-4 py-4 text-white bg-green-500 rounded-md  hover:bg-green-600 hover:outline-none" id="open-btn">
-
-                        </button>
+                        <a href="{{ route('admin-student-add') }}">
+                            <button
+                                class="px-4 py-4 text-white bg-green-500 rounded-md  hover:bg-green-600 hover:outline-none"
+                                id="open-btn">
+                                Add New Student
+                            </button>
+                        </a>
                     </div>
 
                 </div>
@@ -36,43 +40,36 @@
 
             <div class="max-w-xl p-5 mx-auto my-10 bg-white rounded-md shadow-sm">
                 <div class="text-center">
-                  <h1 class="my-3 text-3xl font-semibold text-gray-700">{{ 'Add Teacher' }}</h1>
+                  <h1 class="my-3 text-3xl font-semibold text-gray-700">{{ 'View Student' }}</h1>
                   <p class="text-gray-400">Fill in the correct details</p>
                 </div>
                 <div>
-                  <form class="mt-8" action="{{route('admin-teacher-update')}}" method="POST">
+                  <form class="mt-8" action="{{route('admin-student-get')}}" method="GET">
                       @csrf
-                      <input type="hidden" name="id" value="{{ $teacher->id }}">
-                      <div class="mb-6">
-                          <label class="inline-block text-sm text-gray-600" for="color">Surname</label>
-                          <div class="relative flex w-full">
-                              <input name="surname" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Surname" value="{{ $teacher->surname }}">
-
-                          </div>
-                      </div>
 
                       <div class="mb-6">
-                        <label class="inline-block text-sm text-gray-600" for="color">Firstname</label>
+                        <label class="inline-block text-sm text-gray-600" for="color">Select Status</label>
                         <div class="relative flex w-full">
-                            <input name="firstname" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Firstname" value="{{ $teacher->firstname }}">
-
-                        </div>
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="inline-block text-sm text-gray-600" for="color">Teacher's ID</label>
-                        <div class="relative flex w-full">
-                            <input name="teacherid" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Teacher's ID" value="{{ $teacher->teacher_id }}">
-
+                            <select name="status" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400">
+                                <option>All</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                                <option>Graduated</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 text-green-400 pointer-events-none">
+                            <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                            </svg>
+                            </div>
                         </div>
                     </div>
 
                       <div class="mb-6">
-                          <label class="inline-block text-sm text-gray-600" for="color">Assign Class</label>
+                          <label class="inline-block text-sm text-gray-600" for="color">Select Class</label>
                           <div class="relative flex w-full">
                               <select name="class" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400">
-                                  <option selected>{{ $teacher->class }}</option>
-                                  <option disabled> Select new class </option>
+                                  <option disabled selected>Select Class</option>
+                                  <option>Graduated</option>
                                   <option disabled> Senior Secondary School </option>
                                   <option>SSS 3</option>
                                   <option>SSS 2</option>

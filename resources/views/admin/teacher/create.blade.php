@@ -40,13 +40,12 @@
                   <p class="text-gray-400">Fill in the correct details</p>
                 </div>
                 <div>
-                  <form class="mt-8" action="{{route('admin-teacher-update')}}" method="POST">
+                  <form class="mt-8" action="{{route('admin-teacher-store')}}" method="POST">
                       @csrf
-                      <input type="hidden" name="id" value="{{ $teacher->id }}">
                       <div class="mb-6">
                           <label class="inline-block text-sm text-gray-600" for="color">Surname</label>
                           <div class="relative flex w-full">
-                              <input name="surname" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Surname" value="{{ $teacher->surname }}">
+                              <input name="surname" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Surname">
 
                           </div>
                       </div>
@@ -54,7 +53,7 @@
                       <div class="mb-6">
                         <label class="inline-block text-sm text-gray-600" for="color">Firstname</label>
                         <div class="relative flex w-full">
-                            <input name="firstname" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Firstname" value="{{ $teacher->firstname }}">
+                            <input name="firstname" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Firstname">
 
                         </div>
                     </div>
@@ -62,7 +61,7 @@
                     <div class="mb-6">
                         <label class="inline-block text-sm text-gray-600" for="color">Teacher's ID</label>
                         <div class="relative flex w-full">
-                            <input name="teacherid" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Teacher's ID" value="{{ $teacher->teacher_id }}">
+                            <input name="teacherid" type="text" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400" placeholder="Teacher's ID">
 
                         </div>
                     </div>
@@ -71,8 +70,7 @@
                           <label class="inline-block text-sm text-gray-600" for="color">Assign Class</label>
                           <div class="relative flex w-full">
                               <select name="class" class="block w-full py-3 pl-4 pr-8 bg-white border border-gray-300 rounded-sm appearance-none cursor-pointer focus:outline-none hover:border-gray-400">
-                                  <option selected>{{ $teacher->class }}</option>
-                                  <option disabled> Select new class </option>
+                                  <option disabled selected>Select Class</option>
                                   <option disabled> Senior Secondary School </option>
                                   <option>SSS 3</option>
                                   <option>SSS 2</option>

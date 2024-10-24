@@ -5,8 +5,10 @@ use App\Http\Controllers\SubjectRegistrationController;
 use App\Http\Controllers\ResultCheckerController;
 use App\Http\Controllers\BillsController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UploadResultController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,15 +43,25 @@ Route::middleware('auth')->group(function () {
 Route::prefix("admin")->middleware(['auth','verified'])->group(function() {
     Route::prefix("teachers")->group(function() {
         Route::get("/", [TeacherController::class, 'index'])->name('admin-teacher');
+        Route::get("/add", [TeacherController::class, 'create'])->name('admin-teacher-add');
+        Route::post("/add", [TeacherController::class, 'store'])->name('admin-teacher-store');
+        Route::get("/edit", [TeacherController::class, 'edit'])->name('admin-teacher-edit');
+        Route::post("/update", [TeacherController::class, 'update'])->name('admin-teacher-update');
+        Route::get("/subject", [TeacherController::class, 'subject'])->name('admin-teacher-subject');
+        Route::post("/add-subject", [TeacherController::class, 'store_subject'])->name('admin-teacher-subject-store');
+        Route::post("/delete-subject", [TeacherController::class, 'destroy_subject'])->name('admin-teacher-subject-destroy');
+    });
+
+    Route::prefix("students")->group(function() {
+        Route::get("/", [StudentController::class, 'index'])->name('admin-student');
+        Route::get("/add", [StudentController::class, 'create'])->name('admin-student-add');
+        Route::get("/edit", [StudentController::class, 'edit'])->name('admin-student-edit');
+        Route::post("/store", [StudentController::class, 'store'])->name('admin-student-store');
+        Route::get("/students", [StudentController::class, 'list'])->name('admin-student-get');
+        Route::post("/student-status", [StudentController::class, 'change_status'])->name('admin-student-status');
     });
 });
 
-Route::prefix('bills')->middleware(['auth', 'verified'])->group(function() {
-    Route::get("/", [BillsController::class, 'index'])->name('bills');
-    Route::get("/select-bill", [BillsController::class, 'view_invoice'])->name('select-bill');
-    Route::get("/make-payment-options", [BillsController::class, 'make_payment_options'])->name('make-payment-options');
-    Route::get('/callback', [BillsController::class, 'callback'])->name('callback');
-});
 
 Route::prefix("result-checker")->middleware(['auth','verified'])->group(function() {
     Route::get("/", [ResultCheckerController::class, 'index'])->name("result-checker");

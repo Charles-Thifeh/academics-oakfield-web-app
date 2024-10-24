@@ -44,6 +44,12 @@ class UploadResultController extends Controller
         return view('result.index', ['subjects' => $subjects, 'session' => $session, 'class' => $class]);
     }
 
+    public function class_index(){
+        $class = Subject::find(Auth::id())->class;
+        $session = DB::table('calenders')->select('session')->distinct()->get();
+        return view('result.index', ['session' => $session, "class" => $class]);
+    }
+
     public function query(Request $request){
         $request->validate([
             'session' => 'required',
@@ -57,6 +63,62 @@ class UploadResultController extends Controller
         $term = $request->term;
         $session = $request->session;
         $subject = DB::table("subtables")->where("id", $request->subject)->first()->subject;
+        $class = $request->class;
+
+        $time = Carbon::now();
+        if($type == "midterm"){
+            $students = DB::table('students')->where([
+                'class' => $class,
+                'status' => "active"
+            ])->get();
+            // var_dump($students);
+            $i = 0;
+
+            foreach($students as $item){
+                $check = DB::table('midterms')->where([
+                    'term' => $term,
+                    'session' => $session,
+                    'subject' => $subject,
+                    'reg_no' => $item->reg_no,
+                ])->first();
+
+
+
+
+                if($check == null){
+                    Midterm::create([
+                        'reg_no' => $item->reg_no,
+                        'class' => $item->class,
+                        'subject' => $subject,
+                        'session' => $session,
+                        'term' => $term
+                    ]);
+                }
+                $results = DB::table('midterms')
+                                ->where([
+                                    'class' => $class,
+                                    'subject' => $subject,
+                                    'session' => $session,
+                                    'term' => $term
+                                ])->get();
+                return view('result.upload', ['results' => $results]);
+            }
+        }
+    }
+
+    public function class_query(Request $request){
+        $request->validate([
+            'session' => 'required',
+            'term' => 'required',
+            'type' => 'required',
+            'subject' => 'required',
+            'class' => 'required',
+        ]);
+
+        $type = $request->type;
+        $term = $request->term;
+        $session = $request->session;
+        $subject = $request->subject;
         $class = $request->class;
 
         $time = Carbon::now();
