@@ -6,7 +6,7 @@
     </x-slot>
 
     @php
-        $class = DB::table('subjects')->where('id', Auth::id())->first()->class;
+        $class = DB::table('subjects')->where('id', Auth::id())->first();
         $teacher_id = DB::table('subjects')->where('id', Auth::id())->first()->teacher_id;
         $subjects = DB::table('subtables')->where('teacher_id', $teacher_id)->get();
     @endphp
