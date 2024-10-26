@@ -55,7 +55,7 @@
                   class="w-full h-full absolute opacity-75 bg-black"
                 ></span> --}}
               </div>
-              <div class="container relative mx-auto">
+              <div class="container relative mx-auto md:mt-40 mt-40">
                 <div class="items-center flex flex-wrap">
                   <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
                     <div class="">
