@@ -25,7 +25,6 @@
                                         <option>{{ $single->session }}</option>
                                     @endforeach
                                 @endif
-                                <option>2024/2025</option>
                             </select>
                             <div
                                 class="absolute inset-y-0 right-0 flex items-center px-2 text-green-400 pointer-events-none">
