@@ -47,7 +47,7 @@ class UploadResultController extends Controller
     public function class_index(){
         $class = Subject::find(Auth::id())->class;
         $session = DB::table('calenders')->select('session')->distinct()->get();
-        return view('result.index', ['session' => $session, "class" => $class]);
+        return view('result.class_index', ['session' => $session, "class" => $class]);
     }
 
     public function query(Request $request){
@@ -63,14 +63,16 @@ class UploadResultController extends Controller
         $term = $request->term;
         $session = $request->session;
         $subject = DB::table("subtables")->where("id", $request->subject)->first()->subject;
+        $department = DB::table("subtables")->where("id", $request->subject)->first()->department;
         $class = $request->class;
 
-        $time = Carbon::now();
         if($type == "midterm"){
             $students = DB::table('students')->where([
                 'class' => $class,
-                'status' => "active"
+                'status' => "active",
+                'dept' => $department
             ])->get();
+
             // var_dump($students);
             $i = 0;
 
@@ -94,7 +96,10 @@ class UploadResultController extends Controller
                         'term' => $term
                     ]);
                 }
-                $results = DB::table('midterms')
+
+            }
+
+            $results = DB::table('midterms')
                                 ->where([
                                     'class' => $class,
                                     'subject' => $subject,
@@ -102,7 +107,6 @@ class UploadResultController extends Controller
                                     'term' => $term
                                 ])->get();
                 return view('result.upload', ['results' => $results]);
-            }
         }
     }
 
@@ -139,8 +143,6 @@ class UploadResultController extends Controller
                 ])->first();
 
 
-
-
                 if($check == null){
                     Midterm::create([
                         'reg_no' => $item->reg_no,
@@ -150,7 +152,8 @@ class UploadResultController extends Controller
                         'term' => $term
                     ]);
                 }
-                $results = DB::table('midterms')
+            }
+            $results = DB::table('midterms')
                                 ->where([
                                     'class' => $class,
                                     'subject' => $subject,
@@ -158,7 +161,6 @@ class UploadResultController extends Controller
                                     'term' => $term
                                 ])->get();
                 return view('result.upload', ['results' => $results]);
-            }
         }
     }
 

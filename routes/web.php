@@ -71,7 +71,9 @@ Route::prefix("result-checker")->middleware(['auth','verified'])->group(function
 //Teacher Upload
 Route::prefix("upload")->middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [UploadResultController::class, 'index'])->name("upload-index");
-    Route::get('query', [UploadResultController::class, 'query'])->name("upload-query");
+    Route::get('/class', [UploadResultController::class, 'class_index'])->name("upload-index-class");
+    Route::post('query/subject', [UploadResultController::class, 'query'])->name("upload-query");
+    Route::post('query/class', [UploadResultController::class, 'class_query'])->name("upload-query-class");
     Route::post('query', [UploadResultController::class, 'queryUpload'])->name("upload-query-post");
 });
 

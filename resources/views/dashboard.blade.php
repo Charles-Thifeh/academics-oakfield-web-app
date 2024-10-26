@@ -6,7 +6,7 @@
     </x-slot>
 
     @php
-        $class = DB::table('subjects')->where('id', Auth::id())->first();
+        $class = DB::table('subjects')->where('id', Auth::id())->first()->class;
         $teacher_id = DB::table('subjects')->where('id', Auth::id())->first()->teacher_id;
         $subjects = DB::table('subtables')->where('teacher_id', $teacher_id)->get();
     @endphp
@@ -34,7 +34,7 @@
                         Upload Results
                         <p class="text-xs italic">Upload results for students in class.</p>
                     </div>
-                    <a href=""
+                    <a href="{{ route('upload-index-class') }}"
                         class="bg-transparent h-12 w-28 hover:bg-white text-white font-semibold hover:text-green-700 py-2 px-4 border border-white hover:border-transparent rounded">
                         Click here
                     </a>
@@ -62,7 +62,7 @@
                 <div
                     class="bg-green-700 flex my-4 mx-8 justify-between px-10 py-10 overflow-hidden shadow-sm sm:rounded-lg hover:scale-110 transition duration-300 ease-in-out">
                     <div class="text-sm text-white w-1/2">
-                        View Students
+                        View Subjects
                         <p class="text-xs italic">View student in class</p>
                     </div>
                     <a href=""

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\Subtable;
 use App\Models\Midterm;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -71,5 +72,35 @@ class TeacherController extends Controller
 
         Alert::success('Updated Successfully', $request->surname." ".$request->firstname." updated successfully");
         return redirect()->route('admin-teacher');
+    }
+
+    public function subject(Request $request){
+        $teacher_id = Subject::where('id', $request->vim)->first()->teacher_id;
+        $subjects = Subtable::where('teacher_id', $teacher_id)->get();
+        return view('admin.teacher.subject', ['subjects' => $subjects]);
+    }
+
+    public function store_subject(Request $request){
+        $request->validate([
+            'subject' => 'required',
+            'level' => 'required'
+        ]);
+
+        Subtable::create([
+            'teacher_id' => $request->id,
+            'subject' => $request->subject,
+            'level' => $request->level,
+            'department' => $request->department
+        ]);
+
+        Alert::success('Added Successfully', 'Subject added successfully');
+        return redirect()->back();
+
+    }
+    public function destroy_subject(Request $request){
+        $sub = Subtable::find($request->vim);
+        $sub->delete();
+        Alert::success('Deleted Successfully', 'Subject deleted successfully');
+        return redirect()->back();
     }
 }

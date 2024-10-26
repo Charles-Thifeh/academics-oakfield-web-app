@@ -28,7 +28,12 @@
     @php
 
     @endphp
-
+<div class="flex w-full justify-start">
+    <a href="{{ route('dashboard') }}">
+        <button class="px-4 py-4 text-white bg-red-500 rounded-md  hover:bg-red-600 hover:outline-none">
+            <- Dashboard </button>
+    </a>
+</div>
     <div class="flex justify-center mt-8">
         <div class="w-full mt-12 py-2 px-4 text-xl">
             <div class="flex my-4">
