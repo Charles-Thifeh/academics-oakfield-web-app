@@ -71,7 +71,7 @@ class UploadResultController extends Controller
                 'class' => $class,
                 'status' => "active",
                 'dept' => $department
-            ])->get();
+            ])->orderBy('surname', 'asc')->get();
 
             // var_dump($students);
             $i = 0;
@@ -130,7 +130,7 @@ class UploadResultController extends Controller
             $students = DB::table('students')->where([
                 'class' => $class,
                 'status' => "active"
-            ])->get();
+            ])->orderBy('surname', 'asc')->get();
             // var_dump($students);
             $i = 0;
 

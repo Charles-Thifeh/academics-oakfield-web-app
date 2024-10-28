@@ -55,7 +55,9 @@ Route::prefix("admin")->middleware(['auth','verified'])->group(function() {
     Route::prefix("students")->group(function() {
         Route::get("/", [StudentController::class, 'index'])->name('admin-student');
         Route::get("/add", [StudentController::class, 'create'])->name('admin-student-add');
+        Route::post("/add", [StudentController::class, 'store'])->name('admin-student-store');
         Route::get("/edit", [StudentController::class, 'edit'])->name('admin-student-edit');
+        Route::post("/update", [StudentController::class, 'update'])->name('admin-student-update');
         Route::post("/store", [StudentController::class, 'store'])->name('admin-student-store');
         Route::get("/students", [StudentController::class, 'list'])->name('admin-student-get');
         Route::post("/student-status", [StudentController::class, 'change_status'])->name('admin-student-status');

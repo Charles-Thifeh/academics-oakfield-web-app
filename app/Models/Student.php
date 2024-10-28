@@ -17,6 +17,7 @@ class Student extends Model
         'department',
         'password',
         'status',
+        'level',
         'created_at',
     ];
 }
