@@ -48,7 +48,7 @@
                             <div>
                                 <form class="mt-8" action="{{ route('admin-teacher-subject-store') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $subjects->first()->teacher_id }}">
+                                    <input type="hidden" name="id" value="{{ $teacher_id }}">
                                     <div class="mb-6">
                                         <label class="inline-block text-sm text-gray-600" for="color">Subject</label>
                                         <div class="relative flex w-full">

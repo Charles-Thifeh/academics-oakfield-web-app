@@ -77,7 +77,7 @@ class TeacherController extends Controller
     public function subject(Request $request){
         $teacher_id = Subject::where('id', $request->vim)->first()->teacher_id;
         $subjects = Subtable::where('teacher_id', $teacher_id)->get();
-        return view('admin.teacher.subject', ['subjects' => $subjects]);
+        return view('admin.teacher.subject', ['subjects' => $subjects, 'teacher_id' => $teacher_id]);
     }
 
     public function store_subject(Request $request){
