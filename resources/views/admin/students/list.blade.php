@@ -114,7 +114,7 @@
                                             @endif
                                     </td>
                                     <td class="border border-slate-500">{{ $item->class }}</td>
-                                    <td class="border border-slate-500">{{ $item->department }}</td>
+                                    <td class="border border-slate-500">{{ $item->dept }}</td>
 
                                     <td class="border border-slate-500 w-32">
                                         <div class="flex gap-2 py-2 px-4">
