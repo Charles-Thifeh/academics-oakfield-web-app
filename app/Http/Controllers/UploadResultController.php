@@ -67,14 +67,23 @@ class UploadResultController extends Controller
         $class = $request->class;
 
         if($type == "midterm"){
-            $students = DB::table('students')->where([
-                'class' => $class,
-                'status' => "active",
-                'dept' => $department
-            ])->orderBy('surname', 'asc')->get();
+            if($department == null){
+                $students = DB::table('students')->where([
+                    'class' => $class,
+                    'status' => "active",
+                ])->orderBy('surname', 'asc')->get();
+            }else{
+                $students = DB::table('students')->where([
+                    'class' => $class,
+                    'status' => "active",
+                    'dept' => $department
+                ])->orderBy('surname', 'asc')->get();
+            }
+
 
             // var_dump($students);
             $i = 0;
+            // var_dump($students);
 
             foreach($students as $item){
                 $check = DB::table('midterms')->where([
