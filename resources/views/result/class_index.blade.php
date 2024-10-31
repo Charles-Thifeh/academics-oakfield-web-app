@@ -12,7 +12,7 @@
                 <p class="text-gray-400">Select the right options</p>
             </div>
             <div>
-                <form class="mt-8" action="{{ route('upload-query-class') }}" method="POST">
+                <form class="mt-8" action="{{ route('upload-query-class') }}" method="GET">
                     @csrf
                     <div class="mb-6">
                         <label class="inline-block text-sm text-gray-600" for="color">Select Session</label>
