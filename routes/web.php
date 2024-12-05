@@ -77,6 +77,9 @@ Route::prefix("upload")->middleware(['auth', 'verified'])->group(function() {
     Route::get('query/subject', [UploadResultController::class, 'query'])->name("upload-query");
     Route::get('query/class', [UploadResultController::class, 'class_query'])->name("upload-query-class");
     Route::post('query', [UploadResultController::class, 'queryUpload'])->name("upload-query-post");
+    Route::post('query-primary', [UploadResultController::class, 'queryPrimaryUpload'])->name("upload-query-primary-post");
+    Route::post('query-secondary', [UploadResultController::class, 'querySecondaryUpload'])->name("upload-query-secondary-post");
+    Route::post('query-terminal', [UploadResultController::class, 'queryTerminalUpload'])->name("upload-query-terminal-post");
 });
 
 require __DIR__.'/auth.php';
